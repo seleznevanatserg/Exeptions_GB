@@ -14,25 +14,30 @@ public class Main {
        
         int sumOfParametrs = 5;
 
-        // запрос на ввод
-        messageForStartInput();
-        String[] userInputString = userInput().split(" ");
+        
 
         while(true){
+            // запрос на ввод
+            messageForStartInput();
+            String[] userInputString = userInput().split(" ");
 
             // проверка ввода 
             int resultParametrs = sumOfParametrs - userInputString.length;
-            if(resultParametrs > 0){
-                System.out.println("Слишком мало парамметров. Укажите больше параметров.");
+            int error = 0;
+            if(resultParametrs < 0){
+                error = 11;
+                codesErrors(error);
                 messageForStartInput();
                 userInputString = userInput().split(" ");
             }
-            if(resultParametrs < 0){
-                System.out.println("Слишком много парамметров. Укажите меньше параметров."); 
+            else if(resultParametrs > 0){
+                error = 10;
+                codesErrors(error);
                 messageForStartInput();
-                userInputString = userInput().split(" "); 
+                userInputString = userInput().split(" ");
             }
-            if(resultParametrs == 0){
+            else if(resultParametrs == 0){
+                codesErrors(error);
                 // System.out.println("Количество парамметров совпадает.");
                 try { 
                     for (int i = 0; i < userInputString.length; i++){
@@ -103,7 +108,6 @@ public class Main {
                 }
             }
         }
-     
     }
     
 
@@ -120,6 +124,16 @@ public class Main {
         Scanner nScanner = new Scanner(System.in);
         String input = nScanner.nextLine();
         return input;
+    }
+
+    // Обработка кода ошибки
+    private static void codesErrors (int codeError){
+        switch (codeError) {
+            case 10:
+                System.out.println("Слишком мало парамметров. Укажите больше параметров.");
+            case 11:
+                System.out.println("Слишком много парамметров. Укажите меньше параметров.");
+        }
     }
 
     //----------------------------------------------------------------------------------------------------------------------------------------
